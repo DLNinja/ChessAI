@@ -58,13 +58,13 @@ def main():
         if moveMade:
             validMoves = state.getValidMoves()
             moveMade = False
-        drawGameState(screen, state, positions)
+        drawGameState(screen, state, positions, validMoves)
         clock.tick(MAX_FPS)
         p.display.flip()
 
-def drawGameState(screen, state, positions):
+def drawGameState(screen, state, positions, moves):
     drawBoard(screen)
-    drawPieces(screen, state.board, positions)
+    drawPieces(screen, state.board, positions, moves)
 
 def drawBoard(screen):
     colors = [p.Color("gray"), p.Color("dark gray")]
@@ -73,14 +73,22 @@ def drawBoard(screen):
             color = colors[(r+c) % 2]
             p.draw.rect(screen, color, p.Rect(c*SQUARE, r*SQUARE, SQUARE, SQUARE))
 
-def drawPieces(screen, board, positions):
+def drawPieces(screen, board, positions, moves):
+    viable = []
     if len(positions) == 1:
-        p.draw.rect(screen, p.Color("red"), p.Rect(positions[0][1] * SQUARE, positions[0][0] * SQUARE, SQUARE, SQUARE), 3)
+        x = positions[0][0]
+        y = positions[0][1]
+        p.draw.rect(screen, p.Color("red"), p.Rect(y * SQUARE, x * SQUARE, SQUARE, SQUARE), 3)
+        for move in moves:
+            if (move.startR, move.startC) == (x, y):
+                viable.append((move.endR, move.endC))
     for r in range(DIMENSION):
         for c in range(DIMENSION):
             piece = board[r][c]
             if piece != '--':
                 screen.blit(IMAGES[piece], p.Rect(c*SQUARE, r*SQUARE, SQUARE, SQUARE))
+            if (r, c) in viable:
+                p.draw.circle(screen, p.Color("red"), (c * SQUARE + SQUARE // 2, r * SQUARE + SQUARE // 2), SQUARE // 6)
 
 
 if __name__ == '__main__':
