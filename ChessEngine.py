@@ -111,9 +111,9 @@ class GameState:
                     elif endPiece[0] == enemyColor:
                         piece = endPiece[1]
                         if (0 <= index <= 3 and piece == 'R') or (4 <= index <= 7 and piece == 'B') or \
-                                (index == 1 and piece == 'P' and (enemyColor == 'w' and 6 <= index <= 7) or (
-                                        enemyColor == 'b' and 4 <= index <= 5)) or \
-                                (piece == 'Q') or (index == 1 and piece == 'K'):
+                                (k == 1 and piece == 'P' and (enemyColor == 'w' and 6 <= index <= 7) or
+                                 (enemyColor == 'b' and 4 <= index <= 5)) or \
+                                (piece == 'Q') or (k == 1 and piece == 'K'):
                             if possiblePin == ():
                                 inCheck = True
                                 checks.append((endRow, endCol, i, j))
@@ -148,7 +148,7 @@ class GameState:
 
     def getKingMoves(self, x, y, moves):
         coordinates = [[-1, 0], [0, -1], [0, 1], [1, 0], [-1, 1], [1, -1], [-1, -1], [1, 1]]
-        color = self.board[x][y]
+        color = self.board[x][y][0]
         for (i, j) in coordinates:
             if self.inBound(x + i, y + j):
                 endPiece = self.board[x+i][y+j]
@@ -254,7 +254,7 @@ class GameState:
         else:
             if self.board[x + 1][y] == '--':
                 if not pinned or direction == (1, 0):
-                    moves.append((x + 1, y))
+                    moves.append(Move((x, y), (x + 1, y), self.board))
                     if x == 1 and self.board[x + 2][y] == '--':
                         moves.append(Move((x, y), (x + 2, y), self.board))
             if y + 1 <= 7:

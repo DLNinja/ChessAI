@@ -39,14 +39,13 @@ def main():
                     positions = []
                 else:
                     sqSelected = (row, col)
-                    # if len(positions) == 0 and (state.board[row][col][0] == 'w' and state.whiteMoves) or (state.board[row][col][0] == 'b' and not state.whiteMoves):
                     positions.append(sqSelected)
                 if len(positions) == 2:
                     move = Move(positions[0], positions[1], state.board)
-                    print(move.getNotation())
                     if move in validMoves:
                         state.makeMove(move)
                         moveMade = True
+                        print(state.whiteMoves)
                         sqSelected = ()
                         positions = []
                     else:
