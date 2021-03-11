@@ -45,7 +45,7 @@ class GameState:
 
     def getValidMoves(self):
         moves = []
-        self.inCheck, self.checks, self.pins = self.pinsAndChecks()
+        self.inCheck, self.pins, self.checks = self.pinsAndChecks()
         if self.whiteMoves:
             kingRow = self.wKing[0]
             kingCol = self.wKing[1]
@@ -66,7 +66,7 @@ class GameState:
                     for i in range(1, 8):
                         validSquare = (kingRow + check[2] * i, kingCol + check[3] * i)
                         validSquares.append(validSquare)
-                        if validSquare[0] == kingRow and validSquare[1] == kingCol:
+                        if validSquare[0] == checkRow and validSquare[1] == checkCol:
                             break
                 for k in range(len(moves)-1, -1, -1):
                     if moves[k].pieceMoved[1] != 'K':
@@ -95,7 +95,7 @@ class GameState:
             enemyColor = 'w'
             kingRow = self.bKing[0]
             kingCol = self.bKing[1]
-        coordinates = [[-1, 0], [0, -1], [0, 1], [1, 0], [-1, 1], [-1, -1], [1, -1], [1, 1]]
+        coordinates = [[-1, 0], [0, -1], [0, 1], [1, 0], [-1, -1], [-1, 1], [1, -1], [1, 1]]
         for index, (i, j) in enumerate(coordinates):
             possiblePin = ()
             for k in range(1, 8):
@@ -111,8 +111,8 @@ class GameState:
                     elif endPiece[0] == enemyColor:
                         piece = endPiece[1]
                         if (0 <= index <= 3 and piece == 'R') or (4 <= index <= 7 and piece == 'B') or \
-                                (k == 1 and piece == 'P' and (enemyColor == 'w' and 6 <= index <= 7) or
-                                 (enemyColor == 'b' and 4 <= index <= 5)) or \
+                                (k == 1 and piece == 'P' and ((enemyColor == 'w' and 6 <= index <= 7) or
+                                 (enemyColor == 'b' and 4 <= index <= 5))) or \
                                 (piece == 'Q') or (k == 1 and piece == 'K'):
                             if possiblePin == ():
                                 inCheck = True
@@ -190,7 +190,7 @@ class GameState:
             if self.pins[i][0] == x and self.pins[i][1] == y:
                 pinned = True
                 direction = (self.pins[i][2], self.pins[i][3])
-                if self.board[x][y] != 'Q':
+                if self.board[x][y][1] != 'Q':
                     self.pins.remove(self.pins[i])
                 break
         coordinates = [[-1, 0], [0, -1], [0, 1], [1, 0]]
