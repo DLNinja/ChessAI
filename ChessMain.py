@@ -42,13 +42,14 @@ def main():
                     positions.append(sqSelected)
                 if len(positions) == 2:
                     move = Move(positions[0], positions[1], state.board)
-                    if move in validMoves:
-                        state.makeMove(move)
-                        moveMade = True
-                        print(state.whiteMoves)
-                        sqSelected = ()
-                        positions = []
-                    else:
+                    for i in range(len(validMoves)):
+                        if move == validMoves[i]:
+                            state.makeMove(move)
+                            moveMade = True
+                            print(state.whiteMoves)
+                            sqSelected = ()
+                            positions = []
+                    if not moveMade:
                         positions = []
             elif e.type == p.KEYDOWN:
                 if e.key == p.K_r:

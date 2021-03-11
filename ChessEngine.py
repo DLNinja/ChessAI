@@ -21,6 +21,7 @@ class GameState:
         self.inCheck = False
         self.checks = []
         self.pins = []
+        self.enpassant = ()
 
     def makeMove(self, move):
         self.board[move.startR][move.startC] = '--'
@@ -32,6 +33,20 @@ class GameState:
         elif move.pieceMoved == "bK":
             self.bKing = (move.endR, move.endC)
 
+        # Pawn promotion
+        if move.isPawnPromotion:
+            self.board[move.endR][move.endC] = move.pieceMoved[0] + 'Q'
+
+        # Update enpassant variable
+        if move.pieceMoved[1] == 'P' and abs(move.startR - move.endR) == 2:
+            self.enpassant = ((move.startR + move.endR) // 2, move.endC)
+        else:
+            self.enpassant = ()
+
+        # En passant
+        if move.isEnpassantMove:
+            self.board[move.startR][move.endC] = '--'
+
     def undoMove(self):
         if len(self.moveLog) != 0:
             move = self.moveLog.pop()
@@ -42,6 +57,14 @@ class GameState:
                 self.wKing = (move.startR, move.startC)
             elif move.pieceMoved == "bK":
                 self.bKing = (move.startR, move.startC)
+            # Undo en passant
+            if move.isEnpassantMove:
+                self.board[move.endR][move.endC] = '--'
+                self.board[move.startR][move.endC] = move.pieceCaptured
+                self.enpassant = (move.endR, move.endC)
+
+            if move.pieceMoved[1] == 'P' and abs(move.startR - move.endR) == 2:
+                self.enpassant = ()
 
     def getValidMoves(self):
         moves = []
@@ -245,12 +268,16 @@ class GameState:
                         moves.append(Move((x, y), (x - 2, y), self.board))
             if y - 1 >= 0:
                 if not pinned or direction == (-1, -1):
-                    if self.board[x - 1][y - 1][0] == 'b':  # and self.board[x - 1][y - 1] != 'bK':
+                    if self.board[x - 1][y - 1][0] == 'b':
                         moves.append(Move((x, y), (x - 1, y - 1), self.board))
+                    elif (x-1, y-1) == self.enpassant:
+                        moves.append(Move((x, y), (x - 1, y - 1), self.board, enpassant=True))
             if y + 1 <= 7:
                 if not pinned or direction == (-1, 1):
-                    if self.board[x - 1][y + 1][0] == 'b':  # and self.board[x - 1][y + 1] != 'bK':
+                    if self.board[x - 1][y + 1][0] == 'b':
                         moves.append(Move((x, y), (x - 1, y + 1), self.board))
+                    elif (x-1, y+1) == self.enpassant:
+                        moves.append(Move((x, y), (x - 1, y + 1), self.board, enpassant=True))
         else:
             if self.board[x + 1][y] == '--':
                 if not pinned or direction == (1, 0):
@@ -259,12 +286,16 @@ class GameState:
                         moves.append(Move((x, y), (x + 2, y), self.board))
             if y + 1 <= 7:
                 if not pinned or direction == (1, 1):
-                    if self.board[x + 1][y + 1][0] == 'w':  # and self.board[x + 1][y + 1] != 'wK':
+                    if self.board[x + 1][y + 1][0] == 'w':
                         moves.append(Move((x, y), (x + 1, y + 1), self.board))
+                    elif (x+1, y+1) == self.enpassant:
+                        moves.append(Move((x, y), (x + 1, y + 1), self.board, enpassant=True))
             if y - 1 >= 0:
                 if not pinned or direction == (1, -1):
-                    if self.board[x + 1][y - 1][0] == 'w':  # and self.board[x + 1][y - 1] != 'wK':
+                    if self.board[x + 1][y - 1][0] == 'w':
                         moves.append(Move((x, y), (x + 1, y - 1), self.board))
+                    elif (x+1, y-1) == self.enpassant:
+                        moves.append(Move((x, y), (x + 1, y - 1), self.board, enpassant=True))
 
 
 class Move:
@@ -275,13 +306,20 @@ class Move:
                    'e': 4, 'f': 5, 'g': 6, 'h': 7}
     colsToFiles = {v: k for k, v in filesToCols.items()}
 
-    def __init__(self, start, end, board):
+    def __init__(self, start, end, board, enpassant=False):
         self.startR = start[0]
         self.startC = start[1]
         self.endR = end[0]
         self.endC = end[1]
         self.pieceMoved = board[self.startR][self.startC]
         self.pieceCaptured = board[self.endR][self.endC]
+        # Pawn promotion
+        self.isPawnPromotion = (self.pieceMoved == "wP" and self.endR == 0) or (self.pieceMoved == "bP" and self.endR == 7)
+        # En passant
+        self.isEnpassantMove = enpassant
+        if enpassant:
+            self.pieceCaptured = 'wP' if self.pieceMoved == 'bP' else 'bP'
+
         self.moveID = start[0] * 1000 + start[1] * 100 + end[0] * 10 + end[1]
 
     def __eq__(self, other):
