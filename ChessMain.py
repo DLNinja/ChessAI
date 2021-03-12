@@ -46,7 +46,6 @@ def main():
                         if move == validMoves[i]:
                             state.makeMove(move)
                             moveMade = True
-                            print(state.whiteMoves)
                             sqSelected = ()
                             positions = []
                     if not moveMade:

@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d409beb9-80d8-4ba7-8ca0-391008e68737" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/TUDOR.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ChessEngine.py" beforeDir="false" afterPath="$PROJECT_DIR$/ChessEngine.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ChessMain.py" beforeDir="false" afterPath="$PROJECT_DIR$/ChessMain.py" afterDir="false" />
@@ -122,43 +120,51 @@
       <option name="project" value="LOCAL" />
       <updated>1615483020635</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Promotion and en passant">
+      <created>1615487827527</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1615487827527</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value=".." />
     <MESSAGE value="Working, but can be better" />
     <MESSAGE value="Checkmate works" />
-    <option name="LAST_COMMIT_MESSAGE" value="Checkmate works" />
+    <MESSAGE value="Promotion and en passant" />
+    <option name="LAST_COMMIT_MESSAGE" value="Promotion and en passant" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="-1306" y="7" key="CommitChangelistDialog2" timestamp="1615483019796">
+    <state x="-1306" y="7" key="CommitChangelistDialog2" timestamp="1615487826943">
       <screen x="-1920" y="-112" width="1920" height="1050" />
     </state>
-    <state x="-1306" y="7" key="CommitChangelistDialog2/0.0.1280.689/-1920.-112.1920.1050@-1920.-112.1920.1050" timestamp="1615483019796" />
-    <state width="1899" height="59" key="GridCell.Tab.0.bottom" timestamp="1615487753286">
+    <state x="-1306" y="7" key="CommitChangelistDialog2/0.0.1280.689/-1920.-112.1920.1050@-1920.-112.1920.1050" timestamp="1615487826943" />
+    <state width="1899" height="125" key="GridCell.Tab.0.bottom" timestamp="1615552252516">
       <screen x="-1920" y="-112" width="1920" height="1050" />
     </state>
-    <state width="1899" height="59" key="GridCell.Tab.0.bottom/0.0.1280.689/-1920.-112.1920.1050@-1920.-112.1920.1050" timestamp="1615487753286" />
-    <state width="1899" height="59" key="GridCell.Tab.0.center" timestamp="1615487753286">
+    <state width="1899" height="125" key="GridCell.Tab.0.bottom/0.0.1280.689/-1920.-112.1920.1050@-1920.-112.1920.1050" timestamp="1615552252516" />
+    <state width="1899" height="125" key="GridCell.Tab.0.center" timestamp="1615552252516">
       <screen x="-1920" y="-112" width="1920" height="1050" />
     </state>
-    <state width="1899" height="59" key="GridCell.Tab.0.center/0.0.1280.689/-1920.-112.1920.1050@-1920.-112.1920.1050" timestamp="1615487753286" />
-    <state width="1899" height="59" key="GridCell.Tab.0.left" timestamp="1615487753286">
+    <state width="1899" height="125" key="GridCell.Tab.0.center/0.0.1280.689/-1920.-112.1920.1050@-1920.-112.1920.1050" timestamp="1615552252516" />
+    <state width="1899" height="125" key="GridCell.Tab.0.left" timestamp="1615552252516">
       <screen x="-1920" y="-112" width="1920" height="1050" />
     </state>
-    <state width="1899" height="59" key="GridCell.Tab.0.left/0.0.1280.689/-1920.-112.1920.1050@-1920.-112.1920.1050" timestamp="1615487753286" />
-    <state width="1899" height="59" key="GridCell.Tab.0.right" timestamp="1615487753286">
+    <state width="1899" height="125" key="GridCell.Tab.0.left/0.0.1280.689/-1920.-112.1920.1050@-1920.-112.1920.1050" timestamp="1615552252516" />
+    <state width="1899" height="125" key="GridCell.Tab.0.right" timestamp="1615552252516">
       <screen x="-1920" y="-112" width="1920" height="1050" />
     </state>
-    <state width="1899" height="59" key="GridCell.Tab.0.right/0.0.1280.689/-1920.-112.1920.1050@-1920.-112.1920.1050" timestamp="1615487753286" />
-    <state x="-1368" y="134" key="Vcs.Push.Dialog.v2" timestamp="1615483023141">
+    <state width="1899" height="125" key="GridCell.Tab.0.right/0.0.1280.689/-1920.-112.1920.1050@-1920.-112.1920.1050" timestamp="1615552252516" />
+    <state x="-1368" y="134" key="Vcs.Push.Dialog.v2" timestamp="1615487829105">
       <screen x="-1920" y="-112" width="1920" height="1050" />
     </state>
-    <state x="-1368" y="134" key="Vcs.Push.Dialog.v2/0.0.1280.689/-1920.-112.1920.1050@-1920.-112.1920.1050" timestamp="1615483023141" />
-    <state x="-1264" y="237" key="com.intellij.ide.util.TipDialog" timestamp="1615474109353">
+    <state x="-1368" y="134" key="Vcs.Push.Dialog.v2/0.0.1280.689/-1920.-112.1920.1050@-1920.-112.1920.1050" timestamp="1615487829105" />
+    <state x="-1264" y="237" key="com.intellij.ide.util.TipDialog" timestamp="1615544627873">
       <screen x="-1920" y="-112" width="1920" height="1050" />
     </state>
-    <state x="-1264" y="237" key="com.intellij.ide.util.TipDialog/0.0.1280.689/-1920.-112.1920.1050@-1920.-112.1920.1050" timestamp="1615474109353" />
+    <state x="-1264" y="237" key="com.intellij.ide.util.TipDialog/0.0.1280.689/-1920.-112.1920.1050@-1920.-112.1920.1050" timestamp="1615544627873" />
   </component>
 </project>
