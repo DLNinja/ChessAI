@@ -30,36 +30,39 @@ def main():
     sqSelected = ()
     positions = []
     animate = False
+    gameOver = False
     while running:
         for e in p.event.get():
             if e.type == p.QUIT:
                 running = False
             elif e.type == p.MOUSEBUTTONDOWN:
-                position = p.mouse.get_pos()
-                col = position[0]//SQUARE
-                row = position[1]//SQUARE
-                if sqSelected == (row, col):
-                    sqSelected = ()
-                    positions = []
-                else:
-                    sqSelected = (row, col)
-                    positions.append(sqSelected)
-                if len(positions) == 2:
-                    move = Move(positions[0], positions[1], state.board)
-                    for i in range(len(validMoves)):
-                        if move == validMoves[i]:
-                            state.makeMove(move)
-                            moveMade = True
-                            animate = True
-                            sqSelected = ()
-                            positions = []
-                    if not moveMade:
+                if not gameOver:
+                    position = p.mouse.get_pos()
+                    col = position[0]//SQUARE
+                    row = position[1]//SQUARE
+                    if sqSelected == (row, col):
+                        sqSelected = ()
                         positions = []
+                    else:
+                        sqSelected = (row, col)
+                        positions.append(sqSelected)
+                    if len(positions) == 2:
+                        move = Move(positions[0], positions[1], state.board)
+                        for i in range(len(validMoves)):
+                            if move == validMoves[i]:
+                                state.makeMove(move)
+                                moveMade = True
+                                animate = True
+                                sqSelected = ()
+                                positions = []
+                        if not moveMade:
+                            positions = []
             elif e.type == p.KEYDOWN:
                 if e.key == p.K_u: # undo move when key "U" is pressed
                     state.undoMove()
                     moveMade = True
                     animate = False
+                    gameOver = False
                 if e.key == p.K_r: # reset game when key "R" is pressed
                     state = GameState()
                     validMoves = state.getValidMoves()
@@ -67,12 +70,29 @@ def main():
                     positions = []
                     animate = False
                     moveMade = False
+                    gameOver = False
         if moveMade:
             if animate:
                 moveAnimation(state.moveLog[-1], screen, state.board, clock)
             validMoves = state.getValidMoves()
             moveMade = False
+            state.checkmate = False
+            state.stalemate = False
+            if len(validMoves) == 0:
+                if state.inCheck:
+                    state.checkmate = True
+                else:
+                    state.stalemate = True
         drawGameState(screen, state, positions, validMoves)
+        if state.checkmate:
+            gameOver = True
+            if state.whiteMoves:
+                drawText(screen, "Black wins by checkmate", (0, 1))
+            else:
+                drawText(screen, "White wins by checkmate", (1, 0))
+        elif state.stalemate:
+            gameOver = True
+            drawText(screen, "Stalemate", (0, 0))
         clock.tick(MAX_FPS)
         p.display.flip()
 
@@ -128,6 +148,18 @@ def moveAnimation(move, screen, board, clock):
         p.display.flip()
         clock.tick(60)
 
+def drawText(screen, text, winner):
+    col1 = "White" if winner[0] else "Black"
+    col2 = "White" if winner[1] else "Black"
+    if winner[0] == winner[1]:
+        col2 = "black gray"
+    font = p.font.SysFont("Halvetica", 32, True, False)
+    textObject = font.render(text, 0, p.Color(col2))
+    location = p.Rect(0, 0, WIDTH, HEIGHT).move(WIDTH/2 - textObject.get_width()/2, HEIGHT/2 - textObject.get_height()/2)
+    screen.blit(textObject, location)
+    if winner[0] != winner[1]:
+        textObject = font.render(text, 0, p.Color(col1))
+        screen.blit(textObject, location.move(2, 2))
 
 def playingvsBot():
     p.init()

@@ -21,6 +21,8 @@ class GameState:
         self.inCheck = False
         self.checks = []
         self.pins = []
+        self.checkmate = False
+        self.stalemate = False
         self.enpassant = ()
         self.enpassantLog = [self.enpassant]
         self.currentCastling = Castling(True, True, True, True)
