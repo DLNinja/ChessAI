@@ -47,8 +47,6 @@ class GameState:
                 print(self.board[move.endR][move.endC+1])
                 self.board[move.endR][move.endC-1] = self.board[move.endR][move.endC+1]
                 self.board[move.endR][move.endC+1] = '--'
-                # self.board[move.endR][5] = self.board[move.endR][7]
-                # self.board[move.endR][7] = '--'
             else: # queen side
                 self.board[move.endR][move.endC+1] = self.board[move.endR][move.endC-2]
                 self.board[move.endR][move.endC-2] = '--'

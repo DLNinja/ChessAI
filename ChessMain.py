@@ -1,5 +1,6 @@
 import pygame as p
 from ChessEngine import *
+from AI import *
 import random
 
 DIMENSION = 8
@@ -91,10 +92,7 @@ def drawPieces(screen, board, positions, moves):
             if (r, c) in viable:
                 p.draw.circle(screen, p.Color("red"), (c * SQUARE + SQUARE // 2, r * SQUARE + SQUARE // 2), SQUARE // 6)
 
-# Random mode, when you make a move the opponent chooses a random move from the valid moves and makes that move
-# Performance: pretty bad
-
-def randomBot():
+def playingvsBot():
     p.init()
     screen = p.display.set_mode((WIDTH, HEIGHT))
     clock = p.time.Clock()
@@ -106,6 +104,7 @@ def randomBot():
     running = True
     sqSelected = ()
     positions = []
+    bot = RandomBot  # bot takes the type of AI you'll play against, for now only RandomBot is available
     while running:
         if state.whiteMoves:
             for e in p.event.get():
@@ -136,7 +135,7 @@ def randomBot():
                         state.undoMove()
                         moveMade = True
         else:
-            index = random.randint(0, len(validMoves)-1)
+            index = bot(validMoves)
             state.makeMove(validMoves[index])
             moveMade = True
         if moveMade:
@@ -147,4 +146,4 @@ def randomBot():
         p.display.flip()
 
 
-main()
+playingvsBot()
